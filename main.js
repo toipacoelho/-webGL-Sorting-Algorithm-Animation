@@ -77,8 +77,7 @@ function initWebGL() {
 //
 // initBuffers
 //
-// Initialize the buffers we'll need. For this demo, we just have
-// one object -- a simple two-dimensional cube.
+// Initialize the buffers we'll need.
 //
 function initBuffers() {
 
@@ -191,6 +190,12 @@ function initBuffers() {
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,
         new Uint16Array(cubeVertexIndices), gl.STATIC_DRAW);
 }
+
+//
+// drawsCubes (bars in the future)
+//
+// Draws cubes porpotional to the array element
+//
 
 function drawCube(x, y, z) {
 
