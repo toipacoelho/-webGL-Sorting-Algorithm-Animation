@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>CV - Comapração algoritmos de ordenção</title>
+    <title>CV - Comparação algoritmos de ordenção</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="../webgl.css" type="text/css">
     <script src="sylvester.js" type="text/javascript"></script>
@@ -27,6 +27,19 @@
         <canvas id="glcanvas" width="800" height="450">
             Your browser doesn't appear to support the <code>&lt;canvas&gt;</code> element.
         </canvas>
+        <p>
+            Array length:
+            <input type="number" name="length" value="10">
+            <br> Sort method:
+            <select id="projection-selection">
+                <option value="0">Bubble Sort</option>
+                <option value="1">Selection Sort</option>
+                <option value="2">Insertion Sort</option>
+                <option value="3">Merge Sort</option>
+                <option value="4">Quick Sort</option>
+                <option value="5">Heap Sort</option>
+            </select>
+        </p>
     </div>
 </body>
 

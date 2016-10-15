@@ -26,6 +26,7 @@ var perspectiveMatrix;
 // Called when the canvas is created to get the ball rolling.
 //
 function start() {
+
     canvas = document.getElementById("glcanvas");
 
     initWebGL(canvas); // Initialize the GL context
@@ -203,6 +204,10 @@ function drawCube(x, y, z) {
     // the center of the scene.
     loadIdentity();
 
+    //move drawing positon to most left position
+    //deve haver uma maneira mais elegante de fazer isto
+    mvTranslate([-11.35, 0, 0]);
+
     // Now move the drawing position a bit to where we want to start
     // drawing the cube.
     mvTranslate([x, y, z]);
@@ -249,9 +254,21 @@ function drawScene() {
     // and 100 units away from the camera.
     perspectiveMatrix = makePerspective(45, 800.0 / 450.0, 0.1, 100);
 
-    drawCube(-2.5, 0, -6);
-    drawCube(-0, 0, -6);
-    drawCube(2.5, 0, -6);
+    //array.lengh = x
+    //max(array) = y
+    //z = -(1/2)x V z = -6y
+
+    //X regula horizontal
+    //Y regula vertical
+    //Z regula profundidade
+
+    for (i = 0; i < 10; i++) {
+        //console.log(Math.round(Math.random() * 40)) + "<br>";
+        drawCube(i * 2.5, 0, -20);
+    }
+
+    //drawCube(-2.5, 0, -20);
+    //drawCube(-0, 0, -20);
 
     /*
     // Update the rotation for the next draw, if it's time to do so.
