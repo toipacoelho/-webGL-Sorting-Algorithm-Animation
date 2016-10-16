@@ -17,6 +17,8 @@ var shaderProgram;
 var vertexPositionAttribute;
 var vertexColorAttribute;
 var perspectiveMatrix;
+var arrSize;
+var array = [];
 //
 // start
 //
@@ -37,6 +39,11 @@ function start() {
 		// Here's where we call the routine that builds all the objects
 		// we'll be drawing.
 		initBuffers();
+		arrSize = document.getElementById("length").value;
+		for (var i = 0; i < arrSize; i++) {
+			array[i] = ((Math.random() * arrSize));
+			console.log(array[i]);
+		}
 		// Set up to draw the scene periodically.
 		setInterval(drawScene, 15);
 	}
@@ -156,16 +163,22 @@ function initBuffers() {
 //
 // Draws cubes porpotional to the array element
 //
-function drawCube(x, y, z) {
+function drawCube(x, y, z, heigh) {
 	// Set the drawing position to the "identity" point, which is
 	// the center of the scene.
 	loadIdentity();
 	//move drawing positon to most left position
 	//deve haver uma maneira mais elegante de fazer isto
-	mvTranslate([-11.35, 0, 0]);
+	mvTranslate([-11.35, -0, 0]);
 	// Now move the drawing position a bit to where we want to start
 	// drawing the cube.
 	mvTranslate([x, y, z]);
+	//matrix transformaçao que vai esticar o cubo;
+	var m = $M([[1, 0, 0, 0]
+				, [0, heigh, 0, 0]
+				, [0, 0, 1, 0]
+				, [0, 0, 0, 1]]);
+	multMatrix(m);
 	// Save the current matrix, then rotate before we draw.
 	mvPushMatrix();
 	mvRotate(cubeRotation, [1, 0, 1]);
@@ -203,32 +216,18 @@ function drawScene() {
 	//X regula horizontal
 	//Y regula vertical
 	//Z regula profundidade
-	for (i = 0; i < 10; i++) {
-		//console.log(Math.round(Math.random() * 40)) + "<br>";
-		drawCube(i * 2.5, 0, -20);
+	//bubbleSort(array);
+	for (i = 0; i < arrSize; i++) {
+		drawCube(i * 2.5, 0, -50, array[i]);
 	}
 	//drawCube(-2.5, 0, -20);
 	//drawCube(-0, 0, -20);
-	/*
 	// Update the rotation for the next draw, if it's time to do so.
 	var currentTime = (new Date).getTime();
 	if (lastCubeUpdateTime) {
-	    var delta = currentTime - lastCubeUpdateTime;
-
-	    cubeRotation += (30 * delta) / 1000.0;
-	    cubeXOffset += xIncValue * ((30 * delta) / 1000.0);
-	    cubeYOffset += yIncValue * ((30 * delta) / 1000.0);
-	    cubeZOffset += zIncValue * ((30 * delta) / 1000.0);
-
-	    if (Math.abs(cubeYOffset) > 2.5) {
-	        xIncValue = -xIncValue;
-	        yIncValue = -yIncValue;
-	        zIncValue = -zIncValue;
-	    }
+		var delta = currentTime - lastCubeUpdateTime;
 	}
-
 	lastCubeUpdateTime = currentTime;
-	*/
 }
 //
 // initShaders
@@ -347,11 +346,9 @@ function mvRotate(angle, v) {
 //
 // Event handler
 //
+/*
 function eventListener() {
-	var length = document.getElementById("length");
-	length.addEventListener("click", function () {
-		//altera variavle gobal com tamanho do array
-	});
+	arrSize = document.getElementById("length").value;
 	var sort = document.getElementById("sort-selection");
 	sort.addEventListener("click", function () {
 		// Getting the selection
@@ -372,4 +369,5 @@ function eventListener() {
 			break;
 		}
 	});
-}
+	console.log(arrSize)
+}*/
