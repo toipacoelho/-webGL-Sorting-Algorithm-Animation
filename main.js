@@ -33,11 +33,7 @@ function start() {
 		gl.clearDepth(1.0); // Clear everything
 		gl.enable(gl.DEPTH_TEST); // Enable depth testing
 		gl.depthFunc(gl.LEQUAL); // Near things obscure far things
-		// Initialize the shaders; this is where all the lighting for the
-		// vertices and so forth is established.
 		initShaders();
-		// Here's where we call the routine that builds all the objects
-		// we'll be drawing.
 		initBuffers();
 		arrSize = document.getElementById("length").value;
 		for (var i = 0; i < arrSize; i++) {
@@ -45,7 +41,8 @@ function start() {
 			console.log(array[i]);
 		}
 		// Set up to draw the scene periodically.
-		setInterval(drawScene, 15);
+		//setInterval(drawScene, 15);
+		tick();
 	}
 }
 //
@@ -210,24 +207,31 @@ function drawScene() {
 	// ratio of 640:480, and we only want to see objects between 0.1 units
 	// and 100 units away from the camera.
 	perspectiveMatrix = makePerspective(45, 800.0 / 450.0, 0.1, 100);
-	//array.lengh = x
-	//max(array) = y
-	//z = -(1/2)x V z = -6y
-	//X regula horizontal
-	//Y regula vertical
-	//Z regula profundidade
 	//bubbleSort(array);
+	animate();
 	for (i = 0; i < arrSize; i++) {
 		drawCube(i * 2.5, 0, -50, array[i]);
 	}
-	//drawCube(-2.5, 0, -20);
-	//drawCube(-0, 0, -20);
-	// Update the rotation for the next draw, if it's time to do so.
-	var currentTime = (new Date).getTime();
-	if (lastCubeUpdateTime) {
-		var delta = currentTime - lastCubeUpdateTime;
+}
+//
+// Animate scene
+//
+var lastTime = 0;
+
+function animate() {
+	var timeNow = new Date().getTime();
+	if (lastTime != 0) {
+		var elapsed = timeNow - lastTime;
 	}
-	lastCubeUpdateTime = currentTime;
+	lastTime = timeNow;
+}
+//
+// Timer
+//
+function tick() {
+	requestAnimFrame(tick);
+	drawScene();
+	animate();
 }
 //
 // initShaders
