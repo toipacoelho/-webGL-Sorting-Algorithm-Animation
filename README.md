@@ -1,2 +1,2 @@
 # [webGL]Sorting Algorithm Animation
-Illustrate and compare different sorting algorithms 
+webGL based project with the goal to illustrate and compare sorting algorithms with different complexity order.
