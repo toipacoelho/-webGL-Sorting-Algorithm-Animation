@@ -1,17 +1,15 @@
-//////////////////////////////////////////////////////////////////////////////
-//
-//  Mathematical functions
-//
-//  Ref. Original code from the Angel / Shreiner examples
-//
-//	Additional functions by J. Madeira - Sep./Oct. 2015
-//
-//////////////////////////////////////////////////////////////////////////////
+/*
+ Mathematical functions
 
-//----------------------------------------------------------------------------
-//
-//  Helper functions
-//
+ Ref. Original code from the Angel / Shreiner examples
+
+ Additional functions by J. Madeira - Sep./Oct. 2015
+
+ ----------------------------------------------------------------------------
+
+ Helper functions
+
+ */
 
 Number.prototype.round = function(p) {
   p = p || 10;

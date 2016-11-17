@@ -3,7 +3,93 @@
     <meta charset="UTF-8">
     <title>Animação em 3D do funcionamento de algoritmos de ordenação</title>
 </head>
-<body>
+<body onload="runWebGL();">
+    <script id="shader-vs" type="x-shader/x-vertex">
+            attribute vec3 aVertexPosition;
+
+            attribute vec3 aVertexColor;
+
+            uniform mat4 uMVMatrix;
+
+            uniform mat4 uPMatrix;
+
+            varying vec4 vertexColor;
+
+            void main(void) {
+                // To allow seeing the points drawn
+
+                gl_PointSize = 5.0;
+
+                // Just converting the (x,y,z) vertices to Homogeneous Coord.
+
+                // And multiplying by the Projection and the Model-View matrix
+
+                gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+                // Converting the RGB color value to RGBA
+
+                vertexColor = vec4(aVertexColor, 1.0);
+            }
+        </script>
+    <script id="shader-fs" type="x-shader/x-fragment">
+            precision mediump float;
+
+            varying vec4 vertexColor;
+
+            void main(void) {
+
+                // Using the passed vertex color
+
+                gl_FragColor = vertexColor;
+            }
+        </script>
+    <script id="shader-vsback" type="x-shader/x-vertex">
+            attribute vec3 aVertexPosition;
+
+                attribute vec2 aTextureCoord;
+
+            uniform mat4 uMVMatrix;
+
+            uniform mat4 uPMatrix;
+
+                varying vec2 vTextureCoord;
+
+
+            void main(void) {
+                // To allow seeing the points drawn
+
+                // Just converting the (x,y,z) vertices to Homogeneous Coord.
+
+                // And multiplying by the Projection and the Model-View matrix
+
+                gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+
+                // Converting the RGB color value to RGBA
+
+                        vTextureCoord = aTextureCoord;
+            }
+        </script>
+    <script id="shader-fsback" type="x-shader/x-fragment">
+            precision mediump float;
+
+            varying vec2 vTextureCoord;
+
+        uniform sampler2D uSampler;
+
+            void main(void) {
+
+                // Using the passed vertex color
+
+                gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+            }
+        </script>
+
+    <!-- Some useful functions for browser compatibility -->
+    <script type="text/javascript" src="js/webgl-utils.js"></script>
+    <!-- Handling vectors and matrices -->
+    <script type="text/javascript" src="js/maths.js"></script>
+    <!-- WebGL code -->
+    <script type="text/javascript" src="js/initShaders.js"></script>
 
 </body>
 </html>
