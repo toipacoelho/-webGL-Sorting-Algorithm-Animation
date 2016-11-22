@@ -1,95 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Animação em 3D do funcionamento de algoritmos de ordenação</title>
+	<title>CV - Comparação algoritmos de ordenção</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="../webgl.css" type="text/css">
+
+	<!-- Fragment shader program -->
+	<script id="shader-fs" type="x-shader/x-fragment">
+		varying lowp vec4 vColor;
+		void main(void) { gl_FragColor = vColor; }
+	</script>
+
+	<!-- Vertex shader program -->
+	<script id="shader-vs" type="x-shader/x-vertex">
+		attribute vec3 aVertexPosition;
+		attribute vec4 aVertexColor;
+		uniform mat4 uMVMatrix;
+		uniform mat4 uPMatrix;
+		varying lowp vec4 vColor;
+		void main(void) { gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0); vColor = aVertexColor; }
+	</script>
 </head>
-<body onload="runWebGL();">
-    <script id="shader-vs" type="x-shader/x-vertex">
-            attribute vec3 aVertexPosition;
 
-            attribute vec3 aVertexColor;
+<body onload="start()" style="color:#FFFFFF; background-color: #000000">
+	<script src="sylvester.js" type="text/javascript"></script>
+	<script src="glUtils.js" type="text/javascript"></script>
+	<script src="sortAlgorithms.js" type="text/javascript"></script>
+	<script src="webgl-utils.js" type="text/javascript"></script>
+	<script src="main.js" type="text/javascript"></script>
 
-            uniform mat4 uMVMatrix;
-
-            uniform mat4 uPMatrix;
-
-            varying vec4 vertexColor;
-
-            void main(void) {
-                // To allow seeing the points drawn
-
-                gl_PointSize = 5.0;
-
-                // Just converting the (x,y,z) vertices to Homogeneous Coord.
-
-                // And multiplying by the Projection and the Model-View matrix
-
-                gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-                // Converting the RGB color value to RGBA
-
-                vertexColor = vec4(aVertexColor, 1.0);
-            }
-        </script>
-    <script id="shader-fs" type="x-shader/x-fragment">
-            precision mediump float;
-
-            varying vec4 vertexColor;
-
-            void main(void) {
-
-                // Using the passed vertex color
-
-                gl_FragColor = vertexColor;
-            }
-        </script>
-    <script id="shader-vsback" type="x-shader/x-vertex">
-            attribute vec3 aVertexPosition;
-
-                attribute vec2 aTextureCoord;
-
-            uniform mat4 uMVMatrix;
-
-            uniform mat4 uPMatrix;
-
-                varying vec2 vTextureCoord;
-
-
-            void main(void) {
-                // To allow seeing the points drawn
-
-                // Just converting the (x,y,z) vertices to Homogeneous Coord.
-
-                // And multiplying by the Projection and the Model-View matrix
-
-                gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-
-                // Converting the RGB color value to RGBA
-
-                        vTextureCoord = aTextureCoord;
-            }
-        </script>
-    <script id="shader-fsback" type="x-shader/x-fragment">
-            precision mediump float;
-
-            varying vec2 vTextureCoord;
-
-        uniform sampler2D uSampler;
-
-            void main(void) {
-
-                // Using the passed vertex color
-
-                gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
-            }
-        </script>
-
-    <!-- Some useful functions for browser compatibility -->
-    <script type="text/javascript" src="js/webgl-utils.js"></script>
-    <!-- Handling vectors and matrices -->
-    <script type="text/javascript" src="js/maths.js"></script>
-    <!-- WebGL code -->
-    <script type="text/javascript" src="js/initShaders.js"></script>
-
+	<div style="text-align: center">
+		<canvas id="glcanvas" width="800" height="450"></canvas>
+		
+		<p> Array length:
+			<input type="number" name="length" value="10" id="length">
+			<br> Sort method:
+			<select id="sort-selection">
+				<option value="0">Bubble Sort</option>
+				<option value="1">Selection Sort</option>
+				<option value="2">Insertion Sort</option>
+				<option value="3">Merge Sort</option>
+				<option value="4">Quick Sort</option>
+				<option value="5">Heap Sort</option>
+			</select>
+			<br>
+			<button id ="sort-start"> Start </button>
+		</p>
+	</div>
 </body>
+
 </html>
