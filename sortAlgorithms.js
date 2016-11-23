@@ -44,24 +44,22 @@ function selectionSort(arr) {
 }
 
 //Insertion
-function insertionSort(arr) {
-	var i, len = arr.length, el, j;
-
-	for (i = 1; i < len; i++) {
-		el = arr[i];
-		j = i;
-		while (j > 0 && arr[j - 1] > toInsert) {
-			arr[j] = arr[j - 1];
-			j--;
-		}
-		arr[j] = el;
-
-		return arr;
-	}
-
-	return arr;
+//TODO todo fudido
+function insertionSort(unsortedList) {
+    var len = unsortedList.length;
+    for (var i = 0; i < len; i++) {
+        var tmp = unsortedList[i]; //Copy of the current element.
+        /*Check through the sorted part and compare with the number in tmp. If large, shift the number*/
+        for (var j = i - 1; j >= 0 && (unsortedList[j] > tmp); j--) {
+            //Shift the number
+            unsortedList[j + 1] = unsortedList[j];
+        }
+        //Insert the copied number at the correct position
+        //in sorted part.
+        unsortedList[j + 1] = tmp;
+    }
+    return unsortedList;
 }
-
 //Merge
 function mergeSort(arr)
 {
@@ -93,77 +91,63 @@ function merge(left, right) {
 	return result.concat(left.slice(l)).concat(right.slice(r));
 }
 
-//Quick
-function quickSort(arr, left, right) {
-	var len = arr.length,
-		pivot, partitionIndex;
-	if (left < right) {
-		pivot = right;
-		partitionIndex = partition(arr, pivot, left, right);
-		//sort left and right
-		quickSort(arr, left, partitionIndex - 1);
-		quickSort(arr, partitionIndex + 1, right);
-	}
-	return arr;
-}
-
-function partition(arr, pivot, left, right) {
-	var pivotValue = arr[pivot],
-		partitionIndex = left;
-	for (var i = left; i < right; i++) {
-		if (arr[i] < pivotValue) {
-			swap(arr, i, partitionIndex);
-			partitionIndex++;
-		}
-	}
-	swap(arr, right, partitionIndex);
-	return partitionIndex;
-}
-
-function swap(arr, i, j) {
-	var temp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = temp;
+//quick
+function quickSort(arr){
+//if array is empty
+    if (arr.length === 0) {
+        return [];
+    }
+    var left = [];
+    var right = [];
+    var pivot = arr[0];
+    //go through each element in array
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] < pivot) {
+            left.push(arr[i]);
+        } else {
+            right.push(arr[i]);
+        }
+    }
+    return quickSort(left).concat(pivot, quickSort(right));
 }
 
 //heap
-function heapSort(arr) {
-	var len = arr.length,
-		end = len - 1;
-	heapify(arr, len);
-	while (end > 0) {
-		swap(arr, end--, 0);
-		siftDown(arr, 0, end);
-	}
-	return arr;
+function heapSort(array) {
+    var swap = function(array, firstIndex, secondIndex) {
+        var temp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = temp;
+    };
+    var maxHeap = function(array, i) {
+        var l = 2 * i;
+        var r = l + 1;
+        var largest;
+        if (l < array.heapSize && array[l] > array[i]) {
+            largest = l;
+        } else {
+            largest = i;
+        }
+        if (r < array.heapSize && array[r] > array[largest]) {
+            largest = r;
+        }
+        if (largest != i) {
+            swap(array, i, largest);
+            maxHeap(array, largest);
+        }
+    };
+    var buildHeap = function(array) {
+        array.heapSize = array.length;
+        for (var i = Math.floor(array.length / 2); i >= 0; i--) {
+            maxHeap(array, i);
+        }
+    };
+    buildHeap(array);
+    for (var i = array.length-1; i >= 1; i--) {
+        swap(array, 0, i);
+        array.heapSize--;
+        maxHeap(array, 0);
+    }
+    return array;
 }
+//shell
 
-function heapify(arr, len) {
-	// break the array into root + two sides, to create tree (heap)
-	var mid = Math.floor((len - 2) / 2);
-	while (mid >= 0) {
-		siftDown(arr, mid--, len - 1);
-	}
-}
-
-function siftDown(arr, start, end) {
-	var root = start,
-		child = root * 2 + 1,
-		toSwap = root;
-	while (child <= end) {
-		if (arr[toSwap] < arr[child]) {
-			swap(arr, toSwap, child);
-		}
-		if (child + 1 <= end && arr[toSwap] < arr[child + 1]) {
-			swap(arr, toSwap, child + 1)
-		}
-		if (toSwap != root) {
-			swap(arr, root, toSwap);
-			root = toSwap;
-		} else {
-			return;
-		}
-		toSwap = root;
-		child = root * 2 + 1
-	}
-}

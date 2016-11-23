@@ -365,7 +365,7 @@ function isSorted(array) {
 	return true;
 }
 
-// Event handler
+// Event handler    
 function setEventListeners(canvas) {
 	var sort = document.getElementById("sort-selection");
 
@@ -389,10 +389,13 @@ function setEventListeners(canvas) {
 			startSorting(array, insertionSort);
 			break;
 		case 3:
+			startSorting(array, mergeSort);
 			break;
 		case 4:
+			startSorting(array, quickSort);
 			break;
 		case 5:
+			startSorting(array, heapSort);
 			break;
 		}
 	});
