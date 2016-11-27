@@ -15,6 +15,22 @@ function bubbleSort(arr, step) {
 	return arr;
 }
 
+function bubbleSort2(arr, step) {
+	var len = arr.length;
+	for (var i = len - 1; i >= 0; i--) {
+		for (var j = 1; j <= i; j++) {
+			if (arr[j - 1] > arr[j]) {
+				var temp = arr[j - 1];
+				arr[j - 1] = arr[j];
+				arr[j] = temp;
+
+				return arr;
+			}
+		}
+	}
+	return arr;
+}
+
 //Select
 function selectionSort(arr, step) {
 	var minIdx, temp, len = arr.length;
@@ -41,8 +57,46 @@ function selectionSort(arr, step) {
 	return arr;
 }
 
+function selectionSort2(arr, step) {
+	var minIdx, temp, len = arr.length;
+
+	for (var i = 0; i < len; i++) {
+		minIdx = i;
+		
+		for (var j = i + 1; j < len; j++) {
+			if (arr[j] < arr[minIdx]) {
+				minIdx = j;
+			}
+		}
+
+		if(minIdx !== i)
+		{
+			temp = arr[i];
+			arr[i] = arr[minIdx];
+			arr[minIdx] = temp;
+
+			return arr;
+		}
+	}
+
+	return arr;
+}
+
 //Insertion
 function insertionSort(arr, step) {
+    var len = arr.length;
+    for (var i = step; i < len; i++) {
+        var tmp = arr[i]; 
+        for (var j = i - 1; j >= 0 && (arr[j] > tmp); j--) {        
+            arr[j + 1] = arr[j];
+        }
+        arr[j + 1] = tmp;
+		return arr;
+    }
+    return arr;
+}
+
+function insertionSort2(arr, step) {
     var len = arr.length;
     for (var i = step; i < len; i++) {
         var tmp = arr[i]; 

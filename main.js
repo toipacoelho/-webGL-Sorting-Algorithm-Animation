@@ -33,9 +33,10 @@ function start() {
 		gl.enable(gl.DEPTH_TEST); // Enable depth testing
 		gl.depthFunc(gl.LEQUAL); // Near things obscure far things
 		initShaders();
-		setEventListeners(canvas);
+		setEventListeners();
 		initBuffers();
 	}
+	start2();
 }
 //
 // initWebGL
@@ -335,6 +336,7 @@ function initializeArray() {
 }
 //Start sorting array
 function startSorting(arr, algrt) {
+	console.log(algrt);
 	algorithm = algrt;
 	array = array;
 	step = 0;
@@ -344,8 +346,7 @@ function startSorting(arr, algrt) {
 
 //Sort array using the algorithm (auto repeat until the end)
 function sortArray() {
-	
-	array = algorithm(array, step);
+	array = algorithm(array,step);
 	step++;
 
 	drawScene();
@@ -366,9 +367,22 @@ function isSorted(array) {
 }
 
 // Event handler    
-function setEventListeners(canvas) {
+function setEventListeners() {
 	var sort = document.getElementById("sort-selection");
+	var sort2 = document.getElementById("sort-selection2");
 
+	var velbuttonplus = document.getElementById("vel-plus");
+	var velbuttonminus = document.getElementById("vel-minus");
+	velbuttonplus.addEventListener("click",function(){
+		speed = speed-10;
+		if(speed<10){
+			speed = 10;
+		}
+	});
+	velbuttonminus.addEventListener("click",function(){
+		speed = speed+10;
+	});
+	
 	var button = document.getElementById("sort-start");
 	button.addEventListener("click", function () {
 
@@ -388,14 +402,41 @@ function setEventListeners(canvas) {
 		case 2:
 			startSorting(array, insertionSort);
 			break;
-		case 3:
-			startSorting(array, mergeSort);
+		}
+	});
+	
+	var button2 = document.getElementById("sort-compare");
+	button2.addEventListener("click", function () {
+
+		//Initialize array and draw scene
+		initializeArray2();
+		drawScene();
+		drawScene2();
+		
+		var p = sort.selectedIndex;	
+		var p2 = sort2.selectedIndex;
+		
+		switch (p) {
+		case 0:
+			startSorting(array, bubbleSort);
 			break;
-		case 4:
-			startSorting(array, quickSort);
+		case 1:
+			startSorting(array, selectionSort);
 			break;
-		case 5:
-			startSorting(array, heapSort);
+		case 2:
+			startSorting(array, insertionSort);
+			break;
+		}
+		
+		switch (p2) {
+		case 0:
+			startSorting2(array2, bubbleSort2);
+			break;
+		case 1:
+			startSorting2(array2, selectionSort2);
+			break;
+		case 2:
+			startSorting2(array2, insertionSort);
 			break;
 		}
 	});
