@@ -1,5 +1,3 @@
-
-
 //Bubble
 function bubbleSort(arr, step) {
 	var len = arr.length;
@@ -57,18 +55,16 @@ function insertionSort(arr, step) {
     return arr;
 }
 
-
 //Merge
-function mergeSort(arr)
-{
+function mergeSort(arr, step) {
 	var len = arr.length;
 	if (len < 2) return arr;
 	var mid = Math.floor(len / 2),
 		left = arr.slice(0, mid),
 		right = arr.slice(mid);
-	//send left and right to the mergeSort to broke it down into pieces
-	//then merge those
-	return merge(mergeSort(left), mergeSort(right));
+	console.log(arr);
+	arr = merge(mergeSort(left), mergeSort(right));
+	return arr;
 }
 
 function merge(left, right) {
@@ -84,13 +80,11 @@ function merge(left, right) {
 			result.push(right[r++]);
 		}
 	}
-	
-	//remaining part needs to be addred to the result
 	return result.concat(left.slice(l)).concat(right.slice(r));
 }
 
 //quick
-function quickSort(arr){
+function quickSort(arr, step){
 //if array is empty
     if (arr.length === 0) {
         return [];
@@ -106,11 +100,12 @@ function quickSort(arr){
             right.push(arr[i]);
         }
     }
+	console.log(arr);
     return quickSort(left).concat(pivot, quickSort(right));
 }
 
 //heap
-function heapSort(array) {
+function heapSort(array, step) {
     var swap = function(array, firstIndex, secondIndex) {
         var temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
