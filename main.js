@@ -345,7 +345,7 @@ function startSorting(arr, algrt) {
 //Sort array using the algorithm (auto repeat until the end)
 function sortArray() {
 	
-	array = algorithm(array);
+	array = algorithm(array, step);
 	step++;
 
 	drawScene();

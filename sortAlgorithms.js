@@ -1,7 +1,7 @@
 
 
 //Bubble
-function bubbleSort(arr) {
+function bubbleSort(arr, step) {
 	var len = arr.length;
 	for (var i = len - 1; i >= 0; i--) {
 		for (var j = 1; j <= i; j++) {
@@ -18,7 +18,7 @@ function bubbleSort(arr) {
 }
 
 //Select
-function selectionSort(arr) {
+function selectionSort(arr, step) {
 	var minIdx, temp, len = arr.length;
 
 	for (var i = 0; i < len; i++) {
@@ -44,22 +44,20 @@ function selectionSort(arr) {
 }
 
 //Insertion
-//TODO todo fudido
-function insertionSort(unsortedList) {
-    var len = unsortedList.length;
-    for (var i = 0; i < len; i++) {
-        var tmp = unsortedList[i]; //Copy of the current element.
-        /*Check through the sorted part and compare with the number in tmp. If large, shift the number*/
-        for (var j = i - 1; j >= 0 && (unsortedList[j] > tmp); j--) {
-            //Shift the number
-            unsortedList[j + 1] = unsortedList[j];
+function insertionSort(arr, step) {
+    var len = arr.length;
+    for (var i = step; i < len; i++) {
+        var tmp = arr[i]; 
+        for (var j = i - 1; j >= 0 && (arr[j] > tmp); j--) {        
+            arr[j + 1] = arr[j];
         }
-        //Insert the copied number at the correct position
-        //in sorted part.
-        unsortedList[j + 1] = tmp;
+        arr[j + 1] = tmp;
+		return arr;
     }
-    return unsortedList;
+    return arr;
 }
+
+
 //Merge
 function mergeSort(arr)
 {
